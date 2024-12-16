@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <title>Sasa Mladenovic - Personal Website</title>
+</head>
+<body>
+    <header>
+        <div id="ny-clock">
+            <span>New York Time: </span>
+            <span id="ny-time"></span>
+        </div>
+        <h1>Sasa Mladenovic</h1>
+        <p>Dobrodošli na moj personalni sajt!</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Insert your background, interests, and skills here.</p>
+    </section>
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <p>Showcase your work or projects here.</p>
+    </section>
+    <section id="iss-tracker">
+        <h2>ISS Tracker</h2>
+        <div id="map"></div>
+        <div id="iss-info">
+            <p>Current ISS Position:</p>
+            <p>Latitude: <span id="iss-lat"></span></p>
+            <p>Longitude: <span id="iss-lng"></span></p>
+        </div>
+    </section>
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Feel free to reach out!</p>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2024 Sasa Mladenovic</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

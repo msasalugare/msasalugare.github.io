@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #35424a;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    color: #35424a;
+    text-decoration: none;
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: #35424a;
+    color: #ffffff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+#ny-clock {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: inline-block;
+    font-size: 1.1em;
+}
+
+#ny-time {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#iss-tracker {
+    text-align: center;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#iss-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+#iss-info p {
+    margin: 5px 0;
+}
+
+#iss-lat, #iss-lng {
+    font-weight: bold;
+    color: #35424a;
+}
