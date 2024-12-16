@@ -1,5 +1,4 @@
-// JavaScript for interactivity can be added here
-
+// NY Clock
 function updateNYTime() {
     const timeElement = document.getElementById('ny-time');
     const options = {
@@ -25,17 +24,17 @@ let issIcon;
 
 // Serbia boundaries (approximate)
 const SERBIA_BOUNDS = {
-    north: 46.190,  // Najsevernija tačka Srbije
-    south: 41.856,  // Najjužnija tačka
-    east: 23.006,   // Najistočnija tačka
-    west: 18.817    // Najzapadnija tačka
+    north: 46.190,
+    south: 41.856,
+    east: 23.006,
+    west: 18.817
 };
 
 // Telegram configuration
 const TELEGRAM_BOT_TOKEN = '7836069749:AAEuFKlrLCtfVh30vNUqwfJgWox1cA2jDec';
-const TELEGRAM_CHAT_IDS = ['8119329733']; // Dodaćemo sinovljev ID ovde
+const TELEGRAM_CHAT_IDS = ['8119329733'];
 let lastNotificationTime = 0;
-const NOTIFICATION_COOLDOWN = 1800000; // 30 minuta u milisekundama
+const NOTIFICATION_COOLDOWN = 1800000; // 30 minutes
 
 function isOverSerbia(lat, lng) {
     return lat <= SERBIA_BOUNDS.north && 
@@ -47,10 +46,10 @@ function isOverSerbia(lat, lng) {
 function sendTelegramNotification(lat, lng) {
     const currentTime = Date.now();
     if (currentTime - lastNotificationTime < NOTIFICATION_COOLDOWN) {
-        return; // Preskači ako je prošlo manje od 30 minuta od poslednje notifikacije
+        console.log('Notification cooldown not expired, skipping notification');
+        return;
     }
 
-    // Formatiranje srpskog vremena
     const options = {
         timeZone: 'Europe/Belgrade',
         year: 'numeric',
@@ -70,7 +69,8 @@ function sendTelegramNotification(lat, lng) {
                    `   Geografska širina: ${lat.toFixed(3)}\n` +
                    `   Geografska dužina: ${lng.toFixed(3)}\n` +
                    `🌍 Proveri uživo na: https://msasalugare.github.io`;
-    
+
+    console.log('Sending Telegram notification...');
     TELEGRAM_CHAT_IDS.forEach(chatId => {
         fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
@@ -86,23 +86,28 @@ function sendTelegramNotification(lat, lng) {
         .then(data => {
             if (data.ok) {
                 lastNotificationTime = currentTime;
-                console.log('Telegram notifikacija poslata!');
+                console.log('Telegram notification sent successfully');
+            } else {
+                console.log('Error sending Telegram notification:', data);
             }
         })
-        .catch(error => console.error('Greška pri slanju Telegram notifikacije:', error));
+        .catch(error => console.error('Error sending Telegram notification:', error));
     });
 }
 
 function initMap() {
+    console.log('Initializing map...');
+    
     // Create map centered at [0, 0]
     map = L.map('map').setView([0, 0], 2);
     
-    // Add OpenStreetMap tiles
+    // Add OpenStreetMap tiles with HTTPS
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: ['a', 'b', 'c']
     }).addTo(map);
 
-    // Create custom ISS icon
+    // Create custom ISS icon with HTTPS
     issIcon = L.icon({
         iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/International_Space_Station.svg/32px-International_Space_Station.svg.png',
         iconSize: [32, 32],
@@ -111,53 +116,62 @@ function initMap() {
 
     // Create ISS marker
     issMarker = L.marker([0, 0], {icon: issIcon}).addTo(map);
-
-    // Start tracking
-    trackISS();
+    
+    console.log('Map initialized successfully');
 }
 
 function trackISS() {
-    // Koristimo HTTPS API za ISS poziciju
-    fetch('https://api.wheretheiss.at/v1/satellites/25544')
+    console.log('Fetching ISS position...');
+    
+    // Using N2YO API instead of wheretheiss.at
+    const apiKey = 'VNQWH6-UESP5E-L8D2JT-4KI0';
+    const satId = '25544'; // ISS NORAD ID
+    
+    fetch(`https://api.n2yo.com/rest/v1/satellite/positions/${satId}/0/0/0/1/&apiKey=${apiKey}`)
         .then(response => {
+            console.log('Response status:', response.status);
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
         .then(data => {
-            const position = {
-                lat: parseFloat(data.latitude),
-                lng: parseFloat(data.longitude)
-            };
-
-            // Update marker position
-            issMarker.setLatLng([position.lat, position.lng]);
+            console.log('Received ISS data:', data);
             
-            // Update info display
-            document.getElementById('iss-lat').textContent = position.lat.toFixed(4);
-            document.getElementById('iss-lng').textContent = position.lng.toFixed(4);
+            if (data.positions && data.positions[0]) {
+                const position = {
+                    lat: data.positions[0].satlatitude,
+                    lng: data.positions[0].satlongitude
+                };
 
-            // Check if ISS is over Serbia and send notification
-            if (isOverSerbia(position.lat, position.lng)) {
-                sendTelegramNotification(position.lat, position.lng);
+                console.log('Parsed position:', position);
+
+                // Update marker position
+                issMarker.setLatLng([position.lat, position.lng]);
+                
+                // Update info display
+                document.getElementById('iss-lat').textContent = position.lat.toFixed(4);
+                document.getElementById('iss-lng').textContent = position.lng.toFixed(4);
+
+                // Check if ISS is over Serbia
+                if (isOverSerbia(position.lat, position.lng)) {
+                    console.log('ISS is over Serbia!');
+                    sendTelegramNotification(position.lat, position.lng);
+                }
+
+                console.log('ISS position updated successfully');
             }
-
-            // Dodajemo informaciju o uspešnom ažuriranju
-            console.log('ISS position updated:', position);
         })
         .catch(error => {
             console.error('Error fetching ISS position:', error);
-            // Pokušaj ponovo za 5 sekundi u slučaju greške
             setTimeout(trackISS, 5000);
         });
 }
 
-// Initialize map when page loads
+// Initialize when page loads
 window.onload = function() {
+    console.log('Page loaded, starting initialization...');
     initMap();
-    // Prvo odmah pozovemo trackISS
-    trackISS();
-    // Zatim postavimo interval za redovno ažuriranje
+    trackISS(); // First immediate call
     setInterval(trackISS, 5000);
 };
