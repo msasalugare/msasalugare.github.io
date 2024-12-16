@@ -123,11 +123,7 @@ function initMap() {
 function trackISS() {
     console.log('Fetching ISS position...');
     
-    // Using N2YO API instead of wheretheiss.at
-    const apiKey = 'VNQWH6-UESP5E-L8D2JT-4KI0';
-    const satId = '25544'; // ISS NORAD ID
-    
-    fetch(`https://api.n2yo.com/rest/v1/satellite/positions/${satId}/0/0/0/1/&apiKey=${apiKey}`)
+    fetch('https://api.wheretheiss.at/v1/satellites/25544')
         .then(response => {
             console.log('Response status:', response.status);
             if (!response.ok) {
@@ -138,29 +134,27 @@ function trackISS() {
         .then(data => {
             console.log('Received ISS data:', data);
             
-            if (data.positions && data.positions[0]) {
-                const position = {
-                    lat: data.positions[0].satlatitude,
-                    lng: data.positions[0].satlongitude
-                };
+            const position = {
+                lat: parseFloat(data.latitude),
+                lng: parseFloat(data.longitude)
+            };
 
-                console.log('Parsed position:', position);
+            console.log('Parsed position:', position);
 
-                // Update marker position
-                issMarker.setLatLng([position.lat, position.lng]);
-                
-                // Update info display
-                document.getElementById('iss-lat').textContent = position.lat.toFixed(4);
-                document.getElementById('iss-lng').textContent = position.lng.toFixed(4);
+            // Update marker position
+            issMarker.setLatLng([position.lat, position.lng]);
+            
+            // Update info display
+            document.getElementById('iss-lat').textContent = position.lat.toFixed(4);
+            document.getElementById('iss-lng').textContent = position.lng.toFixed(4);
 
-                // Check if ISS is over Serbia
-                if (isOverSerbia(position.lat, position.lng)) {
-                    console.log('ISS is over Serbia!');
-                    sendTelegramNotification(position.lat, position.lng);
-                }
-
-                console.log('ISS position updated successfully');
+            // Check if ISS is over Serbia
+            if (isOverSerbia(position.lat, position.lng)) {
+                console.log('ISS is over Serbia!');
+                sendTelegramNotification(position.lat, position.lng);
             }
+
+            console.log('ISS position updated successfully');
         })
         .catch(error => {
             console.error('Error fetching ISS position:', error);
