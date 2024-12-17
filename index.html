@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saša Mladenović</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -10,75 +11,90 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
-    <title>Sasa Mladenovic - Personal Website</title>
 </head>
 <body>
-    <header>
-        <div id="ny-clock">
-            <span>New York Time: </span>
-            <span id="ny-time"></span>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">SM</div>
+            <div class="nav-links">
+                <a href="#home">Početna</a>
+                <a href="#about">O meni</a>
+                <a href="#projects">Projekti</a>
+                <a href="#contact">Kontakt</a>
+            </div>
         </div>
-        <h1>Sasa Mladenovic</h1>
-        <p>Dobrodošli na moj personalni sajt!</p>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
     </nav>
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Insert your background, interests, and skills here.</p>
-    </section>
-    <section id="portfolio">
-        <h2>Portfolio</h2>
-        <p>Showcase your work or projects here.</p>
-    </section>
-    <section id="iss-tracker">
-        <h2>ISS Tracker</h2>
-        <div id="map"></div>
-        <div id="iss-info">
-            <p>Current ISS Position:</p>
-            <p>Latitude: <span id="iss-lat"></span></p>
-            <p>Longitude: <span id="iss-lng"></span></p>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Saša Mladenović</h1>
+            <p class="subtitle">Software Developer & Tech Enthusiast</p>
         </div>
     </section>
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Feel free to reach out!</p>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </section>
-    <div id="loginSection" class="login-section">
-        <div class="login-container">
-            <h2>Prijava</h2>
-            <div id="loginForm">
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Lozinka" required>
-                <button onclick="login()">Prijavi se</button>
-                <button onclick="register()">Registruj se</button>
-            </div>
-            <div id="userInfo" style="display: none;">
-                <p>Dobrodošli, <span id="userEmail"></span>!</p>
-                <button onclick="logout()">Odjavi se</button>
+
+    <section id="iss-tracker" class="iss-section">
+        <div class="section-content">
+            <h2>ISS Tracker</h2>
+            <div class="iss-container">
+                <div id="map"></div>
+                <div class="iss-info">
+                    <h3>Trenutna pozicija</h3>
+                    <p>Geografska širina: <span id="iss-lat">...</span>°</p>
+                    <p>Geografska dužina: <span id="iss-lng">...</span>°</p>
+                    <p>Brzina: <span id="iss-velocity">...</span> km/h</p>
+                    <p>Visina: <span id="iss-altitude">...</span> km</p>
+                </div>
             </div>
         </div>
-    </div>
-    <footer>
-        <p>&copy; 2024 Sasa Mladenovic</p>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="section-content">
+            <h2>O meni</h2>
+            <p>Software developer sa strašću prema tehnologiji i inovacijama. Fokusiran na kreiranje elegantnih i efikasnih rešenja koja pomeraju granice mogućeg.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+        <div class="section-content">
+            <h2>Projekti</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>ISS Tracker</h3>
+                    <p>Real-time praćenje Međunarodne svemirske stanice sa prikazom pozicije na mapi.</p>
+                </div>
+                <!-- Dodati još projekata kasnije -->
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="section-content">
+            <h2>Kontakt</h2>
+            <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Ime</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Poruka</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit">Pošalji</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Saša Mladenović. Sva prava zadržana.</p>
+        </div>
     </footer>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
     <script src="script.js"></script>
-    <script src="auth.js"></script>
 </body>
 </html>

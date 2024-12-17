@@ -1,144 +1,234 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset i osnovni stilovi */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-header {
-    background: #35424a;
-    color: #ffffff;
-    padding: 20px 0;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav a {
-    color: #35424a;
-    text-decoration: none;
-}
-
-section {
-    padding: 20px;
-    margin: 20px;
-    background: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    text-align: center;
-    padding: 10px 0;
-    background: #35424a;
-    color: #ffffff;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-#ny-clock {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 8px 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    display: inline-block;
-    font-size: 1.1em;
-}
-
-#ny-time {
-    font-weight: bold;
-    margin-left: 5px;
-}
-
-#iss-tracker {
-    text-align: center;
-}
-
-#map {
-    height: 400px;
-    width: 100%;
-    margin: 20px 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#iss-info {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    display: inline-block;
-    margin: 10px 0;
-}
-
-#iss-info p {
-    margin: 5px 0;
-}
-
-#iss-lat, #iss-lng {
-    font-weight: bold;
-    color: #35424a;
-}
-
-.login-section {
-    padding: 20px;
-    background-color: #f5f5f5;
-}
-
-.login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.login-container h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.login-container input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
     box-sizing: border-box;
 }
 
-.login-container button {
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #35424a;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
 }
 
-.login-container button:hover {
-    background-color: #2a343a;
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-#userInfo {
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.nav-links a {
+    color: #2c3e50;
+    text-decoration: none;
+    margin-left: 2rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #3498db;
+}
+
+/* Hero sekcija */
+.hero {
+    height: 100vh;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 10px;
+    color: white;
+    padding: 2rem;
 }
 
-#userInfo p {
-    margin-bottom: 10px;
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+}
+
+/* ISS Tracker sekcija */
+.iss-section {
+    padding: 5rem 1rem;
+    background: #f8f9fa;
+}
+
+.section-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.iss-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+#map {
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.iss-info {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.iss-info h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.iss-info p {
+    margin-bottom: 0.5rem;
+}
+
+/* O meni sekcija */
+.about-section {
+    padding: 5rem 1rem;
+    background: white;
+}
+
+/* Projekti sekcija */
+.projects-section {
+    padding: 5rem 1rem;
+    background: #f8f9fa;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Kontakt sekcija */
+.contact-section {
+    padding: 5rem 1rem;
+    background: white;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 2rem auto 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+/* Footer */
+.footer {
+    background: #2c3e50;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+/* Responsivnost */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .iss-container {
+        grid-template-columns: 1fr;
+    }
+
+    #map {
+        height: 300px;
+    }
+}
+
+/* Animacije */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-content {
+    animation: fadeIn 1s ease-out;
 }
