@@ -1,0 +1,24 @@
+name: Update ISS Position
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'  # Run every minute
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  update-iss:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Fetch ISS Position
+        run: |
+          curl -s https://api.wheretheiss.at/v1/satellites/25544 > iss-position.json
+          
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add iss-position.json
+          git commit -m "Update ISS position" || exit 0
+          git push

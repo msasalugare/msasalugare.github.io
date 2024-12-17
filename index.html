@@ -58,9 +58,27 @@
             <button type="submit">Send</button>
         </form>
     </section>
+    <div id="loginSection" class="login-section">
+        <div class="login-container">
+            <h2>Prijava</h2>
+            <div id="loginForm">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Lozinka" required>
+                <button onclick="login()">Prijavi se</button>
+                <button onclick="register()">Registruj se</button>
+            </div>
+            <div id="userInfo" style="display: none;">
+                <p>Dobrodošli, <span id="userEmail"></span>!</p>
+                <button onclick="logout()">Odjavi se</button>
+            </div>
+        </div>
+    </div>
     <footer>
         <p>&copy; 2024 Sasa Mladenovic</p>
     </footer>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>

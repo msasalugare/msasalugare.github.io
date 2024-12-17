@@ -123,8 +123,7 @@ function initMap() {
 function trackISS() {
     console.log('Fetching ISS position...');
     
-    // Using CORS Anywhere as a proxy
-    fetch('https://cors-anywhere.herokuapp.com/https://api.wheretheiss.at/v1/satellites/25544')
+    fetch('iss-position.json')
         .then(response => {
             console.log('Response status:', response.status);
             if (!response.ok) {
