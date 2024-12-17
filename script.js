@@ -2,6 +2,51 @@
 let map;
 let issMarker;
 let issIcon;
+let lastNotificationTime = 0; // Za praćenje vremena poslednje notifikacije
+
+// Telegram bot konfiguracija
+const TELEGRAM_BOT_TOKEN = '6674290773:AAGz4hIRhQVzGJVxgJhOHGPTZBPHxwWNxAY';
+const TELEGRAM_CHAT_ID = '1007755197';
+const NOTIFICATION_COOLDOWN = 5 * 60 * 1000; // 5 minuta u milisekundama
+
+// Funkcija za proveru da li je ISS iznad Srbije
+function isOverSerbia(lat, lng) {
+    return lat >= 42.2 && lat <= 46.2 && lng >= 19.0 && lng <= 23.0;
+}
+
+// Funkcija za slanje Telegram notifikacije
+function sendTelegramNotification(lat, lng) {
+    const currentTime = Date.now();
+    if (currentTime - lastNotificationTime < NOTIFICATION_COOLDOWN) {
+        console.log('Notification cooldown active, skipping...');
+        return;
+    }
+
+    const message = `🛸 ISS je trenutno iznad Srbije!\nŠirina: ${lat.toFixed(4)}°\nDužina: ${lng.toFixed(4)}°\nVreme: ${new Date().toLocaleString('sr-RS')}`;
+    
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            console.log('Telegram notification sent successfully');
+            lastNotificationTime = currentTime;
+        } else {
+            console.error('Failed to send Telegram notification:', data);
+        }
+    })
+    .catch(error => {
+        console.error('Error sending Telegram notification:', error);
+    });
+}
 
 // Inicijalizacija mape
 function initMap() {
@@ -68,6 +113,11 @@ function trackISS() {
             document.getElementById('iss-lng').textContent = position.lng.toFixed(4);
             document.getElementById('iss-velocity').textContent = (data.velocity * 3.6).toFixed(2); // Konverzija u km/h
             document.getElementById('iss-altitude').textContent = data.altitude.toFixed(2);
+
+            // Provera da li je ISS iznad Srbije
+            if (isOverSerbia(position.lat, position.lng)) {
+                sendTelegramNotification(position.lat, position.lng);
+            }
 
             console.log('ISS position updated successfully');
             
